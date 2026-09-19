@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    
+    {
+      "name": "CalibreFit (Android)",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "CalibreFit (Windows)",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "windows"
+    }
+  ]
+}
