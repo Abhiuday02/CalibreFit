@@ -155,10 +155,14 @@ class TodaysWorkoutCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg),
 
           // Start Workout CTA
-          PrimaryButton(
-            label: 'Start Workout',
-            icon: Icons.play_arrow_rounded,
-            onPressed: onStartWorkout,
+          Semantics(
+            label: AppSemantics.startWorkout,
+            button: true,
+            child: PrimaryButton(
+              label: 'Start Workout',
+              icon: Icons.play_arrow_rounded,
+              onPressed: onStartWorkout,
+            ),
           ),
         ],
       ),

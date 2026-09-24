@@ -56,9 +56,28 @@ abstract final class AppWorkoutDefaults {
 
 // ---------------------------------------------------------------------------
 // App info
+// App info & Production metadata
 // ---------------------------------------------------------------------------
 
 abstract final class AppInfo {
   static const String appName = 'CalibreFit';
   static const String appVersion = '1.0.0';
+  static const String appBuildNumber = '1';
+  static const String supportEmail = 'support@calibrefit.app';
+  static const String privacyPolicyUrl = 'https://calibrefit.app/privacy';
+  static const String termsUrl = 'https://calibrefit.app/terms';
+}
+
+// ---------------------------------------------------------------------------
+// Accessibility & Semantics
+// ---------------------------------------------------------------------------
+
+abstract final class AppSemantics {
+  static const String homeHeaderGreeting = 'User Profile and Status Header';
+  static const String syncStatus = 'Cloud Synchronization Status';
+  static const String notificationsBell = 'Notifications and Reminders';
+  static const String signOut = 'Sign out of current account';
+  static const String startWorkout = 'Start scheduled workout';
+  static const String calorieRing = 'Calorie budget and energy balance gauge';
+  static const String formCamera = 'AI Camera Exercise Form Analysis';
 }

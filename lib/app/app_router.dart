@@ -5,12 +5,17 @@ import 'package:calibrefit/features/auth/presentation/register_page.dart';
 import 'package:calibrefit/features/auth/presentation/splash_page.dart';
 import 'package:calibrefit/features/exercise_library/presentation/exercise_detail_page.dart';
 import 'package:calibrefit/features/exercise_library/presentation/exercise_list_page.dart';
+import 'package:calibrefit/features/form_analysis/presentation/form_analysis_page.dart';
 import 'package:calibrefit/features/history/presentation/exercise_progress_page.dart';
 import 'package:calibrefit/features/history/presentation/history_page.dart';
 import 'package:calibrefit/features/history/presentation/workout_history_detail_page.dart';
 import 'package:calibrefit/features/home/presentation/home_page.dart';
+import 'package:calibrefit/features/notifications/presentation/notifications_page.dart';
+import 'package:calibrefit/features/nutrition/presentation/nutrition_page.dart';
 import 'package:calibrefit/features/onboarding/presentation/onboarding_page.dart';
 import 'package:calibrefit/features/onboarding/presentation/onboarding_providers.dart';
+import 'package:calibrefit/features/recommendations/presentation/recommendations_page.dart';
+import 'package:calibrefit/features/sync/presentation/sync_dashboard_page.dart';
 import 'package:calibrefit/features/workouts/presentation/active_workout_page.dart';
 import 'package:calibrefit/features/workouts/presentation/workout_summary_page.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +41,11 @@ abstract final class AppRoutes {
   static const workoutSummary = '/workout/summary';
   static const workoutHistory = '/history';
   static const analytics = '/analytics';
+  static const recommendations = '/recommendations';
+  static const formAnalysis = '/form-analysis';
+  static const nutrition = '/nutrition';
+  static const notifications = '/notifications';
+  static const sync = '/sync';
 }
 
 // ---------------------------------------------------------------------------
@@ -204,6 +214,40 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: 'analytics',
         pageBuilder: (context, state) =>
             const MaterialPage(child: AnalyticsPage()),
+      ),
+      GoRoute(
+        path: AppRoutes.recommendations,
+        name: 'recommendations',
+        pageBuilder: (context, state) =>
+            const MaterialPage(child: RecommendationsPage()),
+      ),
+      GoRoute(
+        path: AppRoutes.formAnalysis,
+        name: 'formAnalysis',
+        pageBuilder: (context, state) {
+          final exercise = state.uri.queryParameters['exercise'] ?? 'squat';
+          return MaterialPage(
+            child: FormAnalysisPage(initialExercise: exercise),
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.nutrition,
+        name: 'nutrition',
+        pageBuilder: (context, state) =>
+            const MaterialPage(child: NutritionPage()),
+      ),
+      GoRoute(
+        path: AppRoutes.notifications,
+        name: 'notifications',
+        pageBuilder: (context, state) =>
+            const MaterialPage(child: NotificationsPage()),
+      ),
+      GoRoute(
+        path: AppRoutes.sync,
+        name: 'sync',
+        pageBuilder: (context, state) =>
+            const MaterialPage(child: SyncDashboardPage()),
       ),
     ],
 

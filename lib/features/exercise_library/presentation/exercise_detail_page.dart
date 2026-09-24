@@ -1,4 +1,5 @@
 import 'package:calibrefit/app/app_constants.dart';
+import 'package:calibrefit/app/app_router.dart';
 import 'package:calibrefit/features/exercise_library/domain/exercise.dart';
 import 'package:calibrefit/features/exercise_library/presentation/exercise_library_providers.dart';
 import 'package:calibrefit/shared/cards/app_card.dart';
@@ -6,6 +7,7 @@ import 'package:calibrefit/shared/loaders/app_loader.dart';
 import 'package:calibrefit/shared/widgets/app_error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 /// Comprehensive Exercise Detail Page.
 ///
@@ -129,6 +131,30 @@ class _ExerciseDetailContent extends StatelessWidget {
           ),
 
           const SizedBox(height: AppSpacing.lg),
+
+          if (exercise.aiSupported) ...[
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF10B981),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+                icon: const Icon(Icons.videocam_rounded),
+                label: const Text('Analyze Form with AI Camera'),
+                onPressed: () {
+                  final exKey = exercise.name.toLowerCase().contains('squat')
+                      ? 'squat'
+                      : exercise.name.toLowerCase().contains('push')
+                      ? 'pushup'
+                      : 'curl';
+                  context.push('${AppRoutes.formAnalysis}?exercise=$exKey');
+                },
+              ),
+            ),
+            const SizedBox(height: AppSpacing.lg),
+          ],
 
           // ── 3. Target Prescription (Sets, Reps, Load, Rest) ─────────
           _PrescriptionGrid(exercise: exercise),

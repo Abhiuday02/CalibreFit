@@ -104,4 +104,3 @@ class AnalyticsSummary {
   final List<VolumeMetricPoint> volumePoints;
   final List<MuscleGroupVolume> muscleBreakdowns;
 }
-

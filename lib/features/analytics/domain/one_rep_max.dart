@@ -128,7 +128,9 @@ List<TrainingPercentage> calculateTrainingPercentages(double oneRepMax) {
 
   return percentageMap.entries.map((entry) {
     final pct = entry.key;
-    final weight = (oneRepMax * (pct / 100.0) * 2).round() / 2.0; // round to nearest 0.5 kg
+    final weight =
+        (oneRepMax * (pct / 100.0) * 2).round() /
+        2.0; // round to nearest 0.5 kg
     return TrainingPercentage(
       percentage: pct,
       weightKg: weight,
@@ -170,4 +172,3 @@ OneRepMaxEstimate calculateOneRepMaxEstimate({
     trainingPercentages: trainingPercentages,
   );
 }
-

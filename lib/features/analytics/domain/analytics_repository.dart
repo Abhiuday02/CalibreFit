@@ -24,4 +24,3 @@ abstract class AnalyticsRepository {
     OneRepMaxFormula formula = OneRepMaxFormula.epley,
   });
 }
-

@@ -1,8 +1,12 @@
 import 'package:calibrefit/app/app_constants.dart';
+import 'package:calibrefit/app/app_router.dart';
 import 'package:calibrefit/features/auth/domain/auth_user.dart';
 import 'package:calibrefit/features/auth/presentation/auth_providers.dart';
+import 'package:calibrefit/features/notifications/presentation/notification_providers.dart';
+import 'package:calibrefit/features/sync/presentation/widgets/sync_status_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 /// Top greeting section of the Home Dashboard.
 class GreetingHeader extends ConsumerWidget {
@@ -21,6 +25,7 @@ class GreetingHeader extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
+    final unreadCount = ref.watch(unreadNotificationsCountProvider);
 
     final name = user?.displayName?.split(' ').first ?? 'Athlete';
     final greeting = _getGreeting();
@@ -71,17 +76,51 @@ class GreetingHeader extends ConsumerWidget {
             ],
           ),
         ),
+        // Sync status badge
+        Semantics(
+          label: AppSemantics.syncStatus,
+          button: true,
+          child: const SyncStatusBadge(),
+        ),
+        const SizedBox(width: AppSpacing.xs),
+        // Notifications bell button
+        Semantics(
+          label: AppSemantics.notificationsBell,
+          value: unreadCount > 0
+              ? '$unreadCount unread notifications'
+              : 'No unread notifications',
+          button: true,
+          child: IconButton(
+            icon: Badge(
+              isLabelVisible: unreadCount > 0,
+              label: Text('$unreadCount'),
+              child: const Icon(Icons.notifications_outlined),
+            ),
+            tooltip: 'Notifications',
+            onPressed: () => context.push(AppRoutes.notifications),
+            style: IconButton.styleFrom(
+              backgroundColor: colorScheme.surfaceContainerHighest,
+              foregroundColor: colorScheme.onSurfaceVariant,
+              minimumSize: const Size(40, 40),
+            ),
+          ),
+        ),
+        const SizedBox(width: AppSpacing.xs),
         // Sign out button
-        IconButton(
-          icon: const Icon(Icons.logout_rounded),
-          tooltip: 'Sign out',
-          onPressed: () async {
-            await ref.read(authNotifierProvider.notifier).signOut();
-          },
-          style: IconButton.styleFrom(
-            backgroundColor: colorScheme.surfaceContainerHighest,
-            foregroundColor: colorScheme.onSurfaceVariant,
-            minimumSize: const Size(40, 40),
+        Semantics(
+          label: AppSemantics.signOut,
+          button: true,
+          child: IconButton(
+            icon: const Icon(Icons.logout_rounded),
+            tooltip: 'Sign out',
+            onPressed: () async {
+              await ref.read(authNotifierProvider.notifier).signOut();
+            },
+            style: IconButton.styleFrom(
+              backgroundColor: colorScheme.surfaceContainerHighest,
+              foregroundColor: colorScheme.onSurfaceVariant,
+              minimumSize: const Size(40, 40),
+            ),
           ),
         ),
       ],

@@ -41,26 +41,29 @@ void main() {
       expect(trend8.length, 8);
     });
 
-    test('getMuscleGroupBreakdown returns muscle groups and volume status', () async {
-      final breakdown = await repository.getMuscleGroupBreakdown(
-        timeRange: TimeRange.past30Days,
-      );
+    test(
+      'getMuscleGroupBreakdown returns muscle groups and volume status',
+      () async {
+        final breakdown = await repository.getMuscleGroupBreakdown(
+          timeRange: TimeRange.past30Days,
+        );
 
-      expect(breakdown.length, 6);
+        expect(breakdown.length, 6);
 
-      final chest = breakdown.firstWhere((m) => m.muscleName == 'Chest');
-      expect(chest.totalVolumeKg, greaterThan(0));
-      expect(chest.totalSets, greaterThan(0));
-      expect(chest.volumeStatus, VolumeStatus.optimal);
+        final chest = breakdown.firstWhere((m) => m.muscleName == 'Chest');
+        expect(chest.totalVolumeKg, greaterThan(0));
+        expect(chest.totalSets, greaterThan(0));
+        expect(chest.volumeStatus, VolumeStatus.optimal);
 
-      final core = breakdown.firstWhere((m) => m.muscleName == 'Core');
-      expect(core.volumeStatus, VolumeStatus.low);
+        final core = breakdown.firstWhere((m) => m.muscleName == 'Core');
+        expect(core.volumeStatus, VolumeStatus.low);
 
-      final totalPct = breakdown
-          .map((m) => m.percentageOfTotal)
-          .fold<double>(0.0, (a, b) => a + b);
-      expect(totalPct, closeTo(100.0, 1.0));
-    });
+        final totalPct = breakdown
+            .map((m) => m.percentageOfTotal)
+            .fold<double>(0.0, (a, b) => a + b);
+        expect(totalPct, closeTo(100.0, 1.0));
+      },
+    );
 
     test('getMuscleGroupBreakdown scales volume by time range', () async {
       final weekBreakdown = await repository.getMuscleGroupBreakdown(
@@ -70,10 +73,12 @@ void main() {
         timeRange: TimeRange.past30Days,
       );
 
-      final weekChest =
-          weekBreakdown.firstWhere((m) => m.muscleName == 'Chest');
-      final monthChest =
-          monthBreakdown.firstWhere((m) => m.muscleName == 'Chest');
+      final weekChest = weekBreakdown.firstWhere(
+        (m) => m.muscleName == 'Chest',
+      );
+      final monthChest = monthBreakdown.firstWhere(
+        (m) => m.muscleName == 'Chest',
+      );
 
       expect(monthChest.totalVolumeKg, greaterThan(weekChest.totalVolumeKg));
       expect(monthChest.totalSets, greaterThan(weekChest.totalSets));
@@ -101,4 +106,3 @@ void main() {
     });
   });
 }
-
